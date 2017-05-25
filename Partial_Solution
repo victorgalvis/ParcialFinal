@@ -1,0 +1,49 @@
+Partial solution
+
+/*-----------------POINT 1 ---------------------------------------*/
+CREATE OR REPLACE FUNCTION Mask_function(maskid IN MASKS.MASKS%TYPE)
+RETURN VARCHAR IS
+   MASKARA VARCHAR(1000) := '';
+   MASK_UPDATE NUMBER := 0;
+   NUMERO NUMBER := 0;
+
+BEGIN
+	SELECT MASK FROM MASKS WHERE MASKI = maskid;
+
+
+FOR MASKI IN mi_array.FIRST .. mi_array.LAST
+LOOP
+    IF mi_array(MASKI) = '*' THEN
+      RETURN TRUE;  
+  
+    IF mi_array(MASKI)=THEN
+    MASK_UPDATE := MASKI + 1;
+    
+    IF (MASK_UPDATE % 6 = 0)
+        NUMERO = MASK_UPDATE;
+          END IF;
+        END IF;
+         UPDATE MASKS SET RESULT =  NUMERO;
+      END IF;
+END LOOP;
+
+/*--------------------------------------------------------*/
+
+
+/*-----------------POINT 2 -----------------*/
+CREATE TABLE MASKS(
+       MASK VARCHAR2 (1000),
+       RESULT VARCHAR2(4000)
+       );
+  
+/*----------------------------------*/
+
+/*-----------------POINT 3 -------------------------------------------------*/
+CREATE TRIGGER T_MASK
+        BEFORE INSERT ON MASKS
+        FOR EACH ROW
+        BEGIN
+        SELECT mask_function.nextval INTO :new.MASK := :new.RESULT FROM dual;
+        END;
+/*--------------------------------------------------------------------------*/        
+        
