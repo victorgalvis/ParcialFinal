@@ -27,16 +27,16 @@ LOOP
       END IF;
 END LOOP;
 
-/*--------------------------------------------------------*/
+/*-------------------------------------------------------------------------*/
 
 
-/*-----------------POINT 2 -----------------*/
+/*-----------------POINT 2 -----------------------------------------------*/
 CREATE TABLE MASKS(
        MASK VARCHAR2 (1000),
        RESULT VARCHAR2(4000)
        );
   
-/*----------------------------------*/
+/*-------------------------------------------------------------------------*/
 
 /*-----------------POINT 3 -------------------------------------------------*/
 CREATE TRIGGER T_MASK
@@ -45,5 +45,72 @@ CREATE TRIGGER T_MASK
         BEGIN
         SELECT mask_function.nextval INTO :new.MASK := :new.RESULT FROM dual;
         END;
-/*--------------------------------------------------------------------------*/        
+/*--------------------------------------------------------------------------*/
+
+
+Buen día profe
+
+realizando nuevamente el examen identifique que en su mayoria lo tengo como no es, 
+le dejo por aqui el que hice para ver si de pronto puede subir esto en mi calificacion,
+muchas gracias porfe, que Dios lo bendiga. 
+
+
+
+/*-----------------POINT 1 ---------------------------------------*/
+
+CREATE OR REPLACE FUNCTION  Mask_function(cadena1 Varchar2)
+return Varchar2 is
+
+
+suma number :=0;
+cadena2 varchar2(4000);
+resultado varchar2(4000);
+
+BEGIN
+
+for index1 in 0..9 loop
+
+cadena2 := replace(cadena1,'*',index1);
+
+if (mod(to_number(cadena2),6)=0)then
+resultado := resultado || ' ' || index1;
+end if;
+
+end loop;
+
+RETURN resultado;
+END Mask_function;
+
+/*-------------------------------------------------------------------*/
+
+/*-----------------POINT 2--------------------------------------------*/
+ CREATE TABLE MASKS ( 
+   	DATO1 NVARCHAR2(1000), 
+	RESULT1 VARCHAR2(4000)
+        );
+
+/*-----------------------------------------------------------------------*/
+
+/*-----------------POINT 3------------------------------------------------*/
+
+--DROP TRIGGER T_MASK;
+
+CREATE OR REPLACE TRIGGER T_MASK
+BEFORE INSERT OR UPDATE ON MASKS
+FOR EACH ROW
+DECLARE
+BEGIN
+
+
+IF (:new.DATOS2 IS NOT NULL)THEN
+
+  :new.RESULTADO1 :=Mask_function(:new.DATOS2);
+  
+  END IF;
+  
+  END;
+  
+---------------------------------------------------------------------
+
+        
         
